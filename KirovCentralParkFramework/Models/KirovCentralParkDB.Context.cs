@@ -13,10 +13,10 @@ namespace KirovCentralParkFramework.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KirovCentralParkEntities : DbContext
+    public partial class yurtymbaevEntities : DbContext
     {
-        public KirovCentralParkEntities()
-            : base("name=KirovCentralParkEntities")
+        public yurtymbaevEntities()
+            : base("name=yurtymbaevEntities")
         {
         }
     

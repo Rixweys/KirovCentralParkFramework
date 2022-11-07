@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using KirovCentralParkFramework.Classes;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KirovCentralParkFramework.Pages
 {
@@ -25,15 +16,17 @@ namespace KirovCentralParkFramework.Pages
             InitializeComponent();
         }
 
+
+
         private void ShowHideButton_Click(object sender, RoutedEventArgs e)
         {
-            if (ShowHideButton.Content.ToString() == "Show")
+            if (ShowHideButton.Content.ToString() == "Показать")
             {
                 if (!string.IsNullOrWhiteSpace(HidePasswordBox.Password))
                 {
                     HidePasswordBox.Visibility = Visibility.Hidden;
                     ShowPassTextBox.Visibility = Visibility.Visible;
-                    ShowHideButton.Content = "Hide";
+                    ShowHideButton.Content = "Спрятать";
                     ShowPassTextBox.Text = HidePasswordBox.Password;
                 }
                 else
@@ -43,7 +36,7 @@ namespace KirovCentralParkFramework.Pages
             {
                 if (!string.IsNullOrWhiteSpace(ShowPassTextBox.Text))
                 {
-                    ShowHideButton.Content = "Show";
+                    ShowHideButton.Content = "Показать";
                     HidePasswordBox.Visibility = Visibility.Visible;
                     ShowPassTextBox.Visibility = Visibility.Hidden;
                     HidePasswordBox.Password = ShowPassTextBox.Text;
@@ -51,6 +44,15 @@ namespace KirovCentralParkFramework.Pages
                 else
                     MessageBox.Show("nope");
             }
+        }
+
+        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (DBConnect.DBContext.Emploee.Any(u => u.Login == LoginTextBox.Text && (u.Password == HidePasswordBox.Password || u.Password == ShowPassTextBox.Text)))
+                NavigationService.Navigate(new UserPage());
+            else
+                MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+
         }
     }
 }

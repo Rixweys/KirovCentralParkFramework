@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KirovCentralParkFramework"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="KirovCentralPark" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Image Grid.Row="0" Source="/Resources/logo.png" HorizontalAlignment="Left"/>
+        <Label Content="KirovCentralPark" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" Source="/Pages/LoginPage.xaml"/>
     </Grid>
 </Window>
