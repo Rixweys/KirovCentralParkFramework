@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KirovCentralParkFramework.Models
+namespace ConsoleApp1
 {
     using System;
     using System.Data.Entity;
@@ -25,13 +25,7 @@ namespace KirovCentralParkFramework.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<Enter> Enter { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<OrderService> OrderService { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<ServiceImp> ServiceImp { get; set; }
-        public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
     }
 }

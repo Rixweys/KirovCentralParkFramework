@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище yurtymbaevModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище yurtymbaevModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Client">
           <Key>
             <PropertyRef Name="Code" />
@@ -20,26 +20,27 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="Emploee">
+        <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Code" />
           </Key>
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IDRole" Type="int" />
-          <Property Name="Lastname" Type="nvarchar" MaxLength="50" />
-          <Property Name="Firstname" Type="nvarchar" MaxLength="50" />
-          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
-          <Property Name="Login" Type="nvarchar" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="IDRole" Type="int" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Image" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Enter">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LastEnter" Type="datetime" />
-          <Property Name="TypeOfEnter" Type="bit" />
-          <Property Name="CodeEmploee" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastEnter" Type="datetime" Nullable="false" />
+          <Property Name="TypeOfEnter" Type="bit" Nullable="false" />
+          <Property Name="CodeEmployee" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -83,27 +84,27 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK_Emploee_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="Emploee" Type="Self.Emploee" Multiplicity="*" />
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Emploee">
+            <Dependent Role="Employee">
               <PropertyRef Name="IDRole" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Enter_Emploee">
-          <End Role="Emploee" Type="Self.Emploee" Multiplicity="0..1" />
+        <Association Name="FK_Enter_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Enter" Type="Self.Enter" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Emploee">
+            <Principal Role="Employee">
               <PropertyRef Name="Code" />
             </Principal>
             <Dependent Role="Enter">
-              <PropertyRef Name="CodeEmploee" />
+              <PropertyRef Name="CodeEmployee" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -157,19 +158,19 @@
         </Association>
         <EntityContainer Name="Хранилище yurtymbaevModelContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Emploee" EntityType="Self.Emploee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Enter" EntityType="Self.Enter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderService" EntityType="Self.OrderService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ServiceImp" EntityType="Self.ServiceImp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Emploee_Role" Association="Self.FK_Emploee_Role">
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
             <End Role="Role" EntitySet="Role" />
-            <End Role="Emploee" EntitySet="Emploee" />
+            <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="FK_Enter_Emploee" Association="Self.FK_Enter_Emploee">
-            <End Role="Emploee" EntitySet="Emploee" />
+          <AssociationSet Name="FK_Enter_Employee" Association="Self.FK_Enter_Employee">
+            <End Role="Employee" EntitySet="Employee" />
             <End Role="Enter" EntitySet="Enter" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
@@ -189,8 +190,7 @@
             <End Role="OrderService" EntitySet="OrderService" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="yurtymbaevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -210,29 +210,16 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Client" FromRole="Client" ToRole="Order" />
         </EntityType>
-        <EntityType Name="Emploee">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IDRole" Type="Int32" />
-          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_Emploee_Role" FromRole="Emploee" ToRole="Role" />
-          <NavigationProperty Name="Enter" Relationship="Self.FK_Enter_Emploee" FromRole="Emploee" ToRole="Enter" />
-        </EntityType>
         <EntityType Name="Enter">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LastEnter" Type="DateTime" Precision="3" />
-          <Property Name="TypeOfEnter" Type="Boolean" />
+          <Property Name="LastEnter" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="TypeOfEnter" Type="Boolean" Nullable="false" />
           <Property Name="CodeEmploee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Emploee" Relationship="Self.FK_Enter_Emploee" FromRole="Enter" ToRole="Emploee" />
+          <Property Name="CodeEmployee" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="yurtymbaevModel.FK_Enter_Employee" FromRole="Enter" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -264,7 +251,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Emploee" Relationship="Self.FK_Emploee_Role" FromRole="Role" ToRole="Emploee" />
+          <NavigationProperty Name="Employee" Relationship="yurtymbaevModel.FK_Employee_Role" FromRole="Role" ToRole="Employee" />
         </EntityType>
         <EntityType Name="ServiceImp">
           <Key>
@@ -293,30 +280,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="CodeClient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Emploee_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="Emploee" Type="Self.Emploee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Emploee">
-              <PropertyRef Name="IDRole" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Enter_Emploee">
-          <End Role="Emploee" Type="Self.Emploee" Multiplicity="0..1" />
-          <End Role="Enter" Type="Self.Enter" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Emploee">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Enter">
-              <PropertyRef Name="CodeEmploee" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -358,7 +321,6 @@
         </Association>
         <EntityContainer Name="yurtymbaevEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Client" EntityType="Self.Client" />
-          <EntitySet Name="Emploee" EntityType="Self.Emploee" />
           <EntitySet Name="Enter" EntityType="Self.Enter" />
           <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="OrderService" EntityType="Self.OrderService" />
@@ -368,14 +330,6 @@
           <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
             <End Role="Client" EntitySet="Client" />
             <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Emploee_Role" Association="Self.FK_Emploee_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="Emploee" EntitySet="Emploee" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Enter_Emploee" Association="Self.FK_Enter_Emploee">
-            <End Role="Emploee" EntitySet="Emploee" />
-            <End Role="Enter" EntitySet="Enter" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Status" Association="Self.FK_Order_Status">
             <End Role="Status" EntitySet="Status" />
@@ -389,7 +343,55 @@
             <End Role="ServiceImp" EntitySet="ServiceImp" />
             <End Role="OrderService" EntitySet="OrderService" />
           </AssociationSet>
+          <EntitySet Name="Employee" EntityType="yurtymbaevModel.Employee" />
+          <AssociationSet Name="FK_Employee_Role" Association="yurtymbaevModel.FK_Employee_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Enter_Employee" Association="yurtymbaevModel.FK_Enter_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Enter" EntitySet="Enter" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IDRole" Type="Int32" Nullable="false" />
+          <Property Name="Lastname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Firstname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Role" Relationship="yurtymbaevModel.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
+          <NavigationProperty Name="Enter" Relationship="yurtymbaevModel.FK_Enter_Employee" FromRole="Employee" ToRole="Enter" />
+        </EntityType>
+        <Association Name="FK_Employee_Role">
+          <End Type="yurtymbaevModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="yurtymbaevModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="IDRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Enter_Employee">
+          <End Type="yurtymbaevModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="yurtymbaevModel.Enter" Role="Enter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="Enter">
+              <PropertyRef Name="CodeEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -412,26 +414,13 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Emploee">
-            <EntityTypeMapping TypeName="yurtymbaevModel.Emploee">
-              <MappingFragment StoreEntitySet="Emploee">
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="IDRole" ColumnName="IDRole" />
-                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
-                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
-                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Enter">
             <EntityTypeMapping TypeName="yurtymbaevModel.Enter">
               <MappingFragment StoreEntitySet="Enter">
+                <ScalarProperty Name="CodeEmployee" ColumnName="CodeEmployee" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="LastEnter" ColumnName="LastEnter" />
                 <ScalarProperty Name="TypeOfEnter" ColumnName="TypeOfEnter" />
-                <ScalarProperty Name="CodeEmploee" ColumnName="CodeEmploee" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -479,6 +468,20 @@
               <MappingFragment StoreEntitySet="Status">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="yurtymbaevModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="IDRole" ColumnName="IDRole" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

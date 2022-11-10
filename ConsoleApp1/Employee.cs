@@ -7,23 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KirovCentralParkFramework.Models
+namespace ConsoleApp1
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Employee()
         {
-            this.Employee = new HashSet<Employee>();
+            this.Enter = new HashSet<Enter>();
         }
     
-        public int ID { get; set; }
-        public string Name { get; set; }
+        public string Code { get; set; }
+        public int IDRole { get; set; }
+        public string Lastname { get; set; }
+        public string Firstname { get; set; }
+        public string Patronymic { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public byte[] Image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<Enter> Enter { get; set; }
     }
 }

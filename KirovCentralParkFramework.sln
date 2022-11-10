@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KirovCentralParkFramework", "KirovCentralParkFramework\KirovCentralParkFramework.csproj", "{762208C4-C3FD-4C3E-A60B-8341960F1992}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{25C7FBAA-AF36-4A72-9EC6-B78542488CFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{762208C4-C3FD-4C3E-A60B-8341960F1992}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{762208C4-C3FD-4C3E-A60B-8341960F1992}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{762208C4-C3FD-4C3E-A60B-8341960F1992}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25C7FBAA-AF36-4A72-9EC6-B78542488CFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25C7FBAA-AF36-4A72-9EC6-B78542488CFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25C7FBAA-AF36-4A72-9EC6-B78542488CFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25C7FBAA-AF36-4A72-9EC6-B78542488CFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

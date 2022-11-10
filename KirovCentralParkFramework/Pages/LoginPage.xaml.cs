@@ -1,4 +1,7 @@
 ﻿using KirovCentralParkFramework.Classes;
+using KirovCentralParkFramework.Models;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -48,8 +51,19 @@ namespace KirovCentralParkFramework.Pages
 
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DBConnect.DBContext.Emploee.Any(u => u.Login == LoginTextBox.Text && (u.Password == HidePasswordBox.Password || u.Password == ShowPassTextBox.Text)))
+            var employee = DBConnect.DBContext.Employee.ToList();
+            if (employee.Any(u => u.Login == LoginTextBox.Text && (u.Password == HidePasswordBox.Password || u.Password == ShowPassTextBox.Text)))
+            {
+                Data.Firstname = employee.FirstOrDefault(u => u.Login == LoginTextBox.Text).Firstname;
+                Data.Lastname = employee.FirstOrDefault(u => u.Login == LoginTextBox.Text).Lastname;
+                Data.Role = DBConnect.DBContext.Role.FirstOrDefault(r => r.ID == DBConnect.DBContext.Employee.FirstOrDefault(u => u.Login == LoginTextBox.Text).IDRole).Name;
+                Data.Image = employee.FirstOrDefault(e => e.Login == LoginTextBox.Text).Image;
+                using (var ms = new MemoryStream(byteArrayIn))
+                {
+                    return Image.FromStream(ms);
+                }
                 NavigationService.Navigate(new UserPage());
+            }
             else
                 MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
 
