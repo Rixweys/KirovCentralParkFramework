@@ -14,7 +14,7 @@ namespace ConsoleApp1
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(new BitmapImage(new Uri("C:\\Users\\azadeba\\source\\repos\\KirovCentralParkFramework\\ConsoleApp1\\NewFolder1\\Смирнова.jpeg", UriKind.Absolute))));
             encoder.Save(stream);
-            Employee employee = context.Employee.First(e => e.Lastname == "Смирнова");
+            Employee employee = context.Employee.First(e => e.Lastname == "Сми1рнова");
             employee.Image = stream.ToArray();
             context.SaveChanges();
         }

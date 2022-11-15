@@ -1,26 +1,23 @@
 ﻿using KirovCentralParkFramework.Classes;
-using KirovCentralParkFramework.Models;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
 namespace KirovCentralParkFramework.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для LoginPage.xaml
-    /// </summary>
     public partial class LoginPage : Page
     {
+        int _entryAttempt = 0;
         public LoginPage()
         {
             InitializeComponent();
         }
-
-
-
         private void ShowHideButton_Click(object sender, RoutedEventArgs e)
         {
             if (ShowHideButton.Content.ToString() == "Показать")
@@ -49,19 +46,36 @@ namespace KirovCentralParkFramework.Pages
             }
         }
 
-        private void EnterButton_Click(object sender, RoutedEventArgs e)
+        private async void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            var employee = DBConnect.DBContext.Employee.ToList();
+            var employee = await DBConnect.DBContext.Employee.ToListAsync();
             if (employee.Any(u => u.Login == LoginTextBox.Text && (u.Password == HidePasswordBox.Password || u.Password == ShowPassTextBox.Text)))
             {
                 Data.Firstname = employee.FirstOrDefault(u => u.Login == LoginTextBox.Text).Firstname;
                 Data.Lastname = employee.FirstOrDefault(u => u.Login == LoginTextBox.Text).Lastname;
-                Data.Role = DBConnect.DBContext.Role.FirstOrDefault(r => r.ID == DBConnect.DBContext.Employee.FirstOrDefault(u => u.Login == LoginTextBox.Text).IDRole).Name;
-                Data.Image = employee.FirstOrDefault(e => e.Login == LoginTextBox.Text).Image;
-                using (var ms = new MemoryStream(byteArrayIn))
+                int userId = (await DBConnect.DBContext.Employee.FirstOrDefaultAsync(u => u.Login == LoginTextBox.Text)).IDRole;
+                Data.Role = (await DBConnect.DBContext.Role.FirstOrDefaultAsync(r => r.ID == userId)).Name;
+
+
+                using (var ms = new MemoryStream(employee.FirstOrDefault(e => e.Login == LoginTextBox.Text).Image))
                 {
-                    return Image.FromStream(ms);
+
+                    using (var memory = new MemoryStream())
+                    {
+                        new Bitmap(ms).Save(memory, ImageFormat.Png);
+                        memory.Position = 0;
+
+                        var bitmapImage = new BitmapImage();
+                        bitmapImage.BeginInit();
+                        bitmapImage.StreamSource = memory;
+                        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmapImage.EndInit();
+                        bitmapImage.Freeze();
+
+                        Data.Image = bitmapImage;
+                    }
                 }
+
                 NavigationService.Navigate(new UserPage());
             }
             else

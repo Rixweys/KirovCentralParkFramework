@@ -17,7 +17,6 @@ namespace KirovCentralParkFramework.Models
         public int ID { get; set; }
         public System.DateTime LastEnter { get; set; }
         public bool TypeOfEnter { get; set; }
-        public string CodeEmploee { get; set; }
         public string CodeEmployee { get; set; }
     
         public virtual Employee Employee { get; set; }

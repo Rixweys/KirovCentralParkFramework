@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="LoginPage">
 
-    <Grid>
+    <Grid Background="White">
         <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -21,10 +21,10 @@
 
             <Label Grid.Row="0" Content="Логин" />
             <Label Grid.Row="2" Content="Пароль"/>
-            <TextBox Name="LoginTextBox" Grid.Row="1"/>
-            <TextBox Grid.Row="3" Name="ShowPassTextBox"/>
-            <PasswordBox Grid.Row="3" Name="HidePasswordBox"/>
-            
+            <TextBox Name="LoginTextBox" Grid.Row="1" Text="shiryev@namecomp.ru"/>
+            <TextBox Grid.Row="3" Name="ShowPassTextBox" Text="RSbvHv"/>
+            <PasswordBox Grid.Row="3" Name="HidePasswordBox" Password="RSbvHv"/>
+
             <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
